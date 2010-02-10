@@ -1,14 +1,150 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Generated CouchApp</title>
-    <link rel="stylesheet" href="style/main.css" type="text/css">
-  </head>
-  <body>
-    <h1>Generated CouchApp</h1>
-    <p>This is a placeholder page</p>
-  </body>
-  <script src="/_utils/script/json2.js"></script>
-  <script src="/_utils/script/jquery.js?1.3.1"></script>
-  <script src="/_utils/script/jquery.couch.js?0.9.0"></script>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+    <title>couch-shelf</title>
+
+    <!-- Framework CSS -->
+    <link rel="stylesheet" href="style/screen.css" type="text/css" media="screen, projection" />
+    <link rel="stylesheet" href="style/print.css" type="text/css" media="print" />
+    <!--[if IE]><link rel="stylesheet" href="style/ie.css" type="text/css" media="screen, projection"><![endif]-->
+
+    <!-- CSS Menu -->
+    <link href="style/dropdown/themes/default/helper.css" media="screen" rel="stylesheet" type="text/css" />
+    <link href="style/dropdown/dropdown.vertical.css" media="screen" rel="stylesheet" type="text/css" />
+    <link href="style/dropdown/themes/default/default.ultimate.css" media="screen" rel="stylesheet" type="text/css" />
+
+    <script src="/_utils/script/json2.js"></script>
+    <script src="/_utils/script/jquery.js?1.3.1"></script>
+    <script src="/_utils/script/jquery.couch.js?0.9.0"></script>
+    <script src="vendor/couchapp/jquery.couchapp.js"></script>
+    <script src="js/shelf.js"></script>
+
+<script>
+function showDetails( docid ) {
+    $.CouchApp( function( app ) {
+        app.db.openDoc( docid, { 
+            success : function(data) {
+                if( data.type == "book" ) {
+
+                    $.CouchApp( function(app) {
+                    var postForm = app.docForm( "#bookDetailsForm", {
+                        id : data._id,
+                        fields : [ "title", "authors", "publisher", "year", "tags" ],
+                        template : {
+                            type : "book"
+                        },
+                        onLoad : function(doc) {
+                            doc.tags = doc.tags.join(" ");
+                            doc.authors = doc.authors.join(";");
+                        },
+                        beforeSave : function(doc) {
+                            if(!doc.created_at) {
+                                doc.created_at = new Date();
+                            }
+                            if(doc.tags) {
+                                doc.tags = $.trim(doc.tags);
+                                doc.tags = doc.tags.split(" ");
+                                for(var idx in doc.tags) {
+                                    doc.tags[idx] = $.trim(doc.tags[idx]);
+                                }
+                            }
+                            if(doc.authors) {
+                                doc.authors = doc.authors.split(";");
+                                for(var idx in doc.authors) {
+                                    doc.authors[idx] = $.trim(doc.authors[idx]);
+                                }
+                            }
+                        }
+                        });
+                    });
+                }
+            }
+        });
+    });
+}
+
+$(document).ready( function() {
+    showDetails("97e6cc09a884f03e1364c7877b2ac1a8");
+});
+</script>
+</head>
+
+<body>
+
+<div class="container">
+
+<hr class="space">&nbsp;</span>
+
+<div class="span-24 last">
+    <h1>Bookshelf</h1>
+    <hr class="space">&nbsp;</span>
+</div>
+
+<div class="span-8">
+<ul id="navigation" class="dropdown dropdown-vertical">
+    <li><a href="#">Start</a></li>
+    <li><span class="dir">Literatur</span>
+        <ul>
+            <li><a href=""><img src="img/document-new.png" />&nbsp;Neuer Eintrag</a></li>
+            <li><a href=""><img src="img/system-search.png" />&nbsp;Suchen</a></li>
+            <li><a href=""><img src="img/weather-overcast.png" />&nbsp;Schlagw&ouml;rter</a></li>
+        </ul>
+    </li>
+    <li><a href="#"><img src="img/preferences-system.png" />&nbsp;Einstellungen</a></li>
+</ul>
+</div>
+
+<div class="span-16 last">
+<div id="content">
+
+<div id="bookDetails">
+
+<script>
+</script>
+
+<form id="bookDetailsForm" method="post">
+
+<table border="0">
+
+    <tr>
+        <td>Titel</td>
+        <td><input type="text" size="50" name="title" value="" /></td>
+    </tr>
+
+    <tr>
+        <td>Autoren</td>
+        <td><input type="text" size="50" name="authors" value="" /></td>
+    </tr>
+
+    <tr>
+        <td>Verlag</td>
+        <td><input type="text" size="50" name="publisher" value="" /></td>
+    </tr>
+
+    <tr>
+        <td>Jahr</td>
+        <td><input type="text" size="50" name="year" value="" /></td>
+    </tr>
+
+    <tr>
+        <td>Schlagw&ouml;rter</td>
+        <td><input type="text" size="50" name="tags" value="" /></td>
+    </tr>
+
+</table>
+
+<input type="submit" value="Speichern" />
+
+</form>
+
+</div>
+
+</div>
+
+</div>
+
+</body>
+
 </html>
