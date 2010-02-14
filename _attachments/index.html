@@ -28,7 +28,7 @@
 <script>
 $(document).ready( function() {
     initHistory();
-    showNewestItems();
+    initDocTypes();
 });
 </script>
 </head>
@@ -46,15 +46,13 @@ $(document).ready( function() {
 
 <div class="span-8">
 <ul id="navigation" class="dropdown dropdown-vertical">
-    <li><a href="#newest" rel="history">Start</a></li>
-    <li><span class="dir">Literatur</span>
-        <ul>
-            <li><a href=""><img src="img/document-new.png" />&nbsp;Neuer Eintrag</a></li>
-            <li><a href=""><img src="img/system-search.png" />&nbsp;Suchen</a></li>
-            <li><a href=""><img src="img/weather-overcast.png" />&nbsp;Schlagw&ouml;rter</a></li>
-        </ul>
+    <li><a href="#newest" rel="history">Neueste Eintr&auml;ge</a></li>
+    <li class="dir">
+        <img src="img/document-new.png" />&nbsp;Neuer Eintrag
+        <ul id="newDocTypeList"> </ul>
     </li>
-    <li><a href="#"><img src="img/preferences-system.png" />&nbsp;Einstellungen</a></li>
+    <li><a href=""><img src="img/system-search.png" />&nbsp;Suchen</a></li>
+    <li><a href="#tagcloud" rel="history"><img src="img/weather-overcast.png" />&nbsp;Schlagw&ouml;rter</a></li>
 </ul>
 </div>
 
