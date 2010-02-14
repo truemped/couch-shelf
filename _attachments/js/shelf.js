@@ -86,18 +86,16 @@ function initDocTypes() {
  * Methods and variables regarding item details.
  *
  */
-var itemDetailsMustacheHead = [ "<div id=\"{{divId}}\">",
+var itemDetailsMustache = [ "<div id=\"{{divId}}\">",
     "<form id=\"{{formId}}\" method=\"post\">",
-    "<table border=\"0\">"].join('\n');
-
-var itemDetailsMustasheRows = [ "{{#fields}}",
+    "<table border=\"0\">",
+    "{{#fields}}",
     "    <tr>",
     "        <td>{{name}}</td>",
     "        <td><input type=\"text\" size=\"50\" name=\"{{id}}\" value=\"\" /></td>",
     "    </tr>",
-    "{{/fields}}"].join('\n');
-
-var itemDetailsMustasheFoot = [ "</table>",
+    "{{/fields}}",
+    "</table>",
     "<input type=\"submit\" value=\"Speichern\" />",
     "</form>",
     "</div>"].join('\n');
@@ -112,9 +110,7 @@ function renderAndBindDocToForm( doc ) {
         }
     }
 
-    var html = $.mustache( itemDetailsMustacheHead, { divId : type.divSelector, formId : type.formSelector } );
-    html += $.mustache( itemDetailsMustasheRows, { fields : fields } );
-    html += itemDetailsMustasheFoot;
+    var html = $.mustache( itemDetailsMustache, { divId : type.divSelector, fields : fields, formId : type.formSelector } );
     $("#content").append( html  );
 
     var couchDbDetails = {
