@@ -47,6 +47,7 @@ function historyPreservingClick( post_url ) {
         if( post_url.indexOf( '#newest' ) > -1 ) {
             showNewestItems();
         } else if( post_url.indexOf( '#new/' ) > -1 ) {
+            $("#content").empty();
             renderAndBindDocToForm( { type : post_url.replace( /^.*#new\//, '' ), _id : null } );
         } else if( post_url.indexOf( '#docId' ) > -1 ) {
             var docId = post_url.replace(/^.*#docId/, '');
@@ -54,8 +55,8 @@ function historyPreservingClick( post_url ) {
         } else if( post_url.indexOf( '#tagcloud' ) > -1 ) {
             showTagCloud();
         } else if( post_url.indexOf( '#tag/' ) > -1 ) {
-            var tags = post_url.replace(/^.#tag\//, '').split('\/');
-            showItemsByTags( tags );
+            var tag = post_url.replace(/^.*#tag\//, '');
+            showItemsByTag( tag );
         }
     }
 
@@ -220,7 +221,7 @@ function showNewestItems() {
  */
 
 var tagsMustache = ["{{#tags}}",
-    "<a style=\"font-size:{{{count}}}px\" href=\"#tag/{{{tag_uri}}}\">{{tag}}</a>",
+    "<a style=\"font-size:{{{count}}}px\" href=\"#tag/{{{tag_uri}}}\" rel=\"history\">{{tag}}</a>",
     "{{/tags}}"].join('\n');
 
 function showTagCloud() {
@@ -257,9 +258,65 @@ function showTagCloud() {
  *
  */
 
-function showItemsByTags( tags ) {
+var tagListResultMustache = [ "{{#docs}}",
+    "<p><a href=\"#docId{{{id}}}\" rel=\"history\">{{title}}, {{authors}}</a></p>",
+    "{{/docs}}"].join('\n');
+
+var tagListPagingLinksMustache = [ "<p>",
+    "<a href=\"#tag/{{{tag}}}/previous/{{{previousId}}}\" rel=\"history\"><img src=\"img/go-previous.png\" /></a>&nbsp;&nbsp;&nbsp;",
+    "<a href=\"#tag/{{{tag}}}/next/{{{nextId}}}\" rel=\"history\"><img src=\"img/go-next.png\" /></a>",
+    "</p>"].join('\n');
+
+function showItemsByTag( tag ) {
     $("#content").empty();
-    $("#correct").append( $.mustache ( empyDivMustache, { divid : "listResult" } ) );
+    $("#content").append( $.mustache ( empyDivMustache, { divid : "listResult" } ) );
+
+    var limit = 10;
+    var skip = 0;
+    var startkey_docid = null;
+    var endkey_docid = null;
+    if( tag.indexOf('/next/') > -1 ) {
+        // show the next page
+        startkey_docid = tag;
+        startkey_docid = startkey_docid.replace(/^.*\/next\//, '');
+        tag = tag.replace( /\/next\/.*$/, '' );
+        limit = 10;
+        skip = 1;
+    } else if( tag.indexOf( '/previous/' ) > -1 ) {
+        // show the previous page
+        endkey_docid = tag;
+        endkey_docid = endkey_docid.replace(/^.*\/previous\//, '');
+        tag = tag.replace( /\/previous\/.*$/, '' );
+        limit = 10;
+        skip = 1;
+    }
+
+    $.CouchApp( function( app ) {
+        var options = {};
+        options.reduce = false;
+        options.key = tag;
+        options.limit = limit;
+        if( skip != 0 ) options.skip = skip;
+        if( startkey_docid ) options.startkey_docid = startkey_docid;
+        if( endkey_docid ) options.endkey_docid = endkey_docid;
+        options.include_docs = true;
+        options.success = function( data ) {
+            if( data.rows.length > 0 ) {
+                var docs = data.rows.map( function( row ) {
+                    return {
+                        id : row.id,
+                        title : row.doc.title,
+                        authors : row.doc.authors.join(';')
+                    };
+                });
+                $("#listResult").append( $.mustache( tagListResultMustache, { docs : docs } ) );
+                $("#listResult").append( $.mustache( tagListPagingLinksMustache, { tag : tag, previousId : data.rows[0].id, nextId : data.rows[ data.rows.length-1 ].id } ) );
+            } else {
+                $("#listResult").append( "<h2>keine weiteren Einträge</h2>" );
+            }
+        };
+        app.view( "tagcloud", options );
+    });
 }
 /*
  * Begin:
