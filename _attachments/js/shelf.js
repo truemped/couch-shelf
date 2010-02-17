@@ -1,26 +1,4 @@
 
-/*
- * different types of available items.
- */
-var types = {
-    "book" : {
-        name : "Buch",
-        divSelector : "bookDetails",
-        formSelector : "bookDetailsForm",
-        fields : [ "title", "authors", "publisher", "year", "tags" ],
-        fieldNames : {
-            "title" : "Titel",
-            "authors" : "Autor",
-            "publisher" : "Verlag",
-            "year" : "Jahr",
-            "tags" : "Schlagwörter"
-        },
-        template : { type : "book" },
-    }
-};
-
-var empyDivMustache = "<div id=\"{{divid}}\"></div>";
-
 /* Begin:
  *
  * Methods for preserving the correct history.
@@ -62,44 +40,19 @@ function historyPreservingClick( post_url ) {
 
     $('body').css('cursor','default');
 }
-
-var newDocTypeListMustache = [ "{{#typedesc}}",
-    "<li><a href=\"#new/{{{id}}}\" rel=\"history\">{{name}}</a></li>",
-    "{{/typedesc}}"].join('\n');
-
-function initDocTypes() {
-    var typedesc = new Array();
-    for( var idx in types ) {
-        typedesc.push( { id : idx, name : types[idx]['name'] } );
-    }
-    $("#newDocTypeList").append( $.mustache( newDocTypeListMustache, { typedesc : typedesc } ) );
-}
-
 /* End:
  *
  * Methods for preserving the correct history.
  *
  */
 
+
+
 /* Begin:
  *
  * Methods and variables regarding item details.
  *
  */
-var itemDetailsMustache = [ "<div id=\"{{divId}}\">",
-    "<form id=\"{{formId}}\" method=\"post\">",
-    "<table border=\"0\">",
-    "{{#fields}}",
-    "    <tr>",
-    "        <td>{{name}}</td>",
-    "        <td><input type=\"text\" size=\"50\" name=\"{{id}}\" value=\"\" /></td>",
-    "    </tr>",
-    "{{/fields}}",
-    "</table>",
-    "<input type=\"submit\" value=\"Speichern\" />",
-    "</form>",
-    "</div>"].join('\n');
-
 function renderAndBindDocToForm( doc ) {
     var type = types[ doc.type ];
 
@@ -165,7 +118,6 @@ function showItemDetails( docid ) {
         });
     });
 }
-
 /* End:
  *
  * Methods and variables regarding item details.
@@ -179,13 +131,10 @@ function showItemDetails( docid ) {
  * Methods and variables regarding the list of newest items.
  *
  */
-
-var newestItemsMustache = "<p><a class=\"link\" rel=\"history\" href=\"#docId{{docid}}\">{{title}}, {{author}}</a></p>";
-
 // function to list the newest items
 function showNewestItems() {
     $("#content").empty();
-    $("#content").append( $.mustache( empyDivMustache, { divid : "listResult" } ) );
+    $("#content").append( $.mustache( emptyDivMustache, { divid : "listResult" } ) );
 
     $.CouchApp( function( app ) {
         var options = {};
@@ -210,19 +159,16 @@ function showNewestItems() {
  *
  */
 
+
+
 /* Begin:
  *
  * Methods and variables regarding the tag cloud.
  *
  */
-
-var tagsMustache = ["{{#tags}}",
-    "<a style=\"font-size:{{{count}}}px\" href=\"#tag/{{{tag_uri}}}\" rel=\"history\">{{tag}}</a>",
-    "{{/tags}}"].join('\n');
-
 function showTagCloud() {
     $("#content").empty();
-    $("#content").append( $.mustache( empyDivMustache, { divid : "tagcloud" } ) );
+    $("#content").append( $.mustache( emptyDivMustache, { divid : "tagcloud" } ) );
 
     $.CouchApp( function( app ) {
         var options = {};
@@ -240,12 +186,13 @@ function showTagCloud() {
         app.view( "tagcloud", options );
     });
 }
-
 /* End:
  *
  * Methods and variables regarding the tag cloud.
  *
  */
+
+
 
 /*
  * Begin:
@@ -253,19 +200,9 @@ function showTagCloud() {
  * Methods and variables regarding the tag filtering.
  *
  */
-
-var tagListResultMustache = [ "{{#docs}}",
-    "<p><a href=\"#docId{{{id}}}\" rel=\"history\">{{title}}, {{authors}}</a></p>",
-    "{{/docs}}"].join('\n');
-
-var tagListPagingLinksMustache = [ "<p>",
-    "<a href=\"#tag/{{{tag}}}/previous/{{{previousId}}}\" rel=\"history\"><img src=\"img/go-previous.png\" /></a>&nbsp;&nbsp;&nbsp;",
-    "<a href=\"#tag/{{{tag}}}/next/{{{nextId}}}\" rel=\"history\"><img src=\"img/go-next.png\" /></a>",
-    "</p>"].join('\n');
-
 function showItemsByTag( tag ) {
     $("#content").empty();
-    $("#content").append( $.mustache ( empyDivMustache, { divid : "listResult" } ) );
+    $("#content").append( $.mustache ( emptyDivMustache, { divid : "listResult" } ) );
 
     var limit = 10;
     var skip = 0;
