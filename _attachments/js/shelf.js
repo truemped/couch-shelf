@@ -59,7 +59,7 @@ function renderAndBindDocToForm( doc ) {
     var fields = [];
     for( var idx in type.fields ) {
         if( idx ) {
-            fields[ idx ] = { id : type.fields[idx], name : type.fieldNames[ type.fields[idx] ] };
+            fields[ idx ] = { id : type.fields[idx], name : fieldNames[ type.fields[idx] ] };
         }
     }
 
