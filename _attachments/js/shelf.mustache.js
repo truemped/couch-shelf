@@ -13,8 +13,18 @@ function initDocTypes() {
     $("#newDocTypeList").append( $.mustache( newDocTypeListMustache, { typedesc : typedesc } ) );
 }
 
-var itemDetailsMustache = [ "<div id=\"{{divId}}\">",
+var itemDetailsMustache = [ 
+    "<ul class=\"tabs\">",
+    "    <li><a href=\"#tab_properties\">Eigenschaften</a></li>",
+    "    <li><a href=\"#tab_notes\">Notizen</a></li>",
+    "    <li><a href=\"#tab_attachments\">Anhänge</a></li>",
+    "</ul>",
+    "",
+    "<div id=\"{{divId}}\" class=\"tab_container\">",
+    "",
     "<form id=\"{{formId}}\" method=\"post\">",
+    "",
+    "<div id=\"tab_properties\" class=\"tab_content\" >",
     "<table border=\"0\">",
     "{{#fields}}",
     "    <tr>",
@@ -23,9 +33,25 @@ var itemDetailsMustache = [ "<div id=\"{{divId}}\">",
     "    </tr>",
     "{{/fields}}",
     "</table>",
+    "</div>",
+    "",
+    "<div id=\"tab_notes\" class=\"tab_content\" >",
+    "    <textarea name=\"notes\" cols=\"80\" rows=\"30\"/>",
+    "</div>",
+    "",
+    "<div id=\"tab_attachments\" class=\"tab_content\" >",
+    "</div>",
+    "",
     "<input type=\"submit\" value=\"Speichern\" />",
     "</form>",
-    "</div>"].join('\n');
+    "",
+    "</div>" // divId
+    ].join('\n');
+
+var itemAttachmentsMustache = [
+    "{{#attachments}}",
+    "    <p><a href=\"{{{url}}}\">{{name}}</a></p>",
+    "{{/attachments}}"].join('\n');
 
 var newestItemsMustache = "<p><a class=\"link\" rel=\"history\" href=\"#docId{{docid}}\">{{title}}, {{author}}</a></p>";
 

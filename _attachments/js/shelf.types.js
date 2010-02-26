@@ -1,6 +1,6 @@
 
 var fieldNames = {
-    "author" : "Autor",
+    "authors" : "Autor",
     "title" : "Titel",
     "publisher" : "Verlag",
     "month" : "Monat",
@@ -14,7 +14,9 @@ var fieldNames = {
     "pages" : "Seiten",
     "chapter" : "Kapitel",
     "booktitle" : "Buchtitel",
-    "journal" : "Zeitschrift"
+    "journal" : "Zeitschrift",
+    "notes" : "Notizen",
+    "tags" : "Schlagwörter",
 };
 
 
@@ -23,14 +25,16 @@ var types = {
             "name" : "Artikel",
             "divSelector" : "articleDetails",
             "formSelector" : "articleDetailsForm",
-            "fields" : [ "author",
+            "fields" : [ "authors",
                 "title",
                 "journal",
                 "month",
                 "year",
                 "volume",
                 "number",
-                "pages" ],
+                "pages",
+                "tags",
+                "notes" ],
             "template" : { "type" : "article" }
         },
     "book" : {
@@ -38,7 +42,7 @@ var types = {
             "divSelector" : "bookDetails",
             "formSelector" : "bookDetailsForm",
             "fields" : [
-                "author",
+                "authors",
                 "title",
                 "publisher",
                 "month",
@@ -48,7 +52,9 @@ var types = {
                 "number",
                 "series",
                 "address",
-                "edition"
+                "edition",
+                "tags",
+                "notes",
             ],
             "template" : { "type" : "book" }
         },
@@ -57,12 +63,14 @@ var types = {
             "divSelector" : "bookletDetails",
             "formSelector" : "bookletDetailsForm",
             "fields" : [
-                "author",
+                "authors",
                 "title",
                 "howpublished",
                 "month",
                 "year",
-                "address"
+                "address",
+                "tags",
+                "notes",
             ],
             "template" : { "type" : "booklet" }
         },
@@ -71,7 +79,7 @@ var types = {
             "divSelector" : "inbookDetails",
             "formSelector" : "inbookDetailsForm",
             "fields" : [
-                "author",
+                "authors",
                 "title",
                 "publisher",
                 "editor",
@@ -83,7 +91,9 @@ var types = {
                 "series",
                 "edition",
                 "pages",
-                "address"
+                "address",
+                "tags",
+                "notes",
             ],
             "template" : { "type" : "inbook" }
         },
@@ -92,7 +102,7 @@ var types = {
             "divSelector" : "incollectionDetails",
             "formSelector" : "incollectionDetailsForm",
             "fields" : [
-                "author",
+                "authors",
                 "title",
                 "booktitle",
                 "publisher",
@@ -105,7 +115,9 @@ var types = {
                 "series",
                 "edition",
                 "pages",
-                "address"
+                "address",
+                "tags",
+                "notes",
             ],
             "template" : { "type" : "inbook" }
         }

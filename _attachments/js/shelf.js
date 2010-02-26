@@ -53,12 +53,12 @@ function historyPreservingClick( post_url ) {
  * Methods and variables regarding item details.
  *
  */
-function renderAndBindDocToForm( doc ) {
+function renderAndBindDocToForm( doc, dbname ) {
     var type = types[ doc.type ];
 
     var fields = [];
     for( var idx in type.fields ) {
-        if( idx ) {
+        if( type.fields[idx].indexOf( "notes" ) == -1 ) {
             fields[ idx ] = { id : type.fields[idx], name : fieldNames[ type.fields[idx] ] };
         }
     }
@@ -102,6 +102,31 @@ function renderAndBindDocToForm( doc ) {
         var postForm = app.docForm( "#"+type["formSelector"], couchDbDetails );
     });
 
+    var attachments = [], idx = 0;
+    for( var name in doc._attachments ) {
+        attachments[idx] = { name : name, url : "/"+[dbname, doc._id,  name].join('/') };
+        idx++;
+    }
+
+    $( "#tab_attachments" ).append( $.mustache( itemAttachmentsMustache, { attachments : attachments } ) );
+
+    //When page loads...
+    $(".tab_content").hide(); //Hide all content
+    $("ul.tabs li:first").addClass("active").show(); //Activate first tab
+    $(".tab_content:first").show(); //Show first tab content
+
+    //On Click Event
+    $("ul.tabs li").click(function() {
+        $("ul.tabs li").removeClass("active"); //Remove any "active" class
+        $(this).addClass("active"); //Add "active" class to selected tab
+        $(".tab_content").hide(); //Hide all tab content
+
+        var activeTab = $(this).find("a").attr("href"); //Find the href attribute value to identify the active tab + content
+        $(activeTab).fadeIn(); //Fade in the active ID content
+        return false;
+    });
+
+
     $( "#"+type["divSelector"] ).show();
 }
 
@@ -111,9 +136,10 @@ function showItemDetails( docid ) {
     $("#content").empty();
 
     $.CouchApp( function( app ) {
+        var dbname = document.location.href.split('/')[3]
         app.db.openDoc( docid, { 
             success : function(doc) {
-                renderAndBindDocToForm( doc );
+                renderAndBindDocToForm( doc, dbname );
             }
         });
     });
