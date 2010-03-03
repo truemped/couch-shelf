@@ -42,17 +42,28 @@ var itemDetailsMustache = [
     "    <input type=\"submit\" value=\"Speichern\" />",
     "</div>",
     "",
-    "<div id=\"tab_attachments\" class=\"tab_content\" >",
-    "</div>",
-    "",
     "</form>",
+    "",
+    "<div id=\"tab_attachments\" class=\"tab_content\" >",
+    "    <div id=\"existing_attachments\"></div><hr/>",
+    "    <p>Neuer Anhang: ",
+    "    <form method=\"POST\" id=\"upload_attachment\">",
+    "        <input type=\"hidden\" name=\"_rev\" value=\"{{docrev}}\">",
+    "        <input name=\"_attachments\" type=\"file\"/>",
+    "        <input type=\"submit\" value=\"Hinzufügen\"/>",
+    "    </form>",
+    "    </p>",
+    "</div>",
     "",
     "</div>" // divId
     ].join('\n');
 
 var itemAttachmentsMustache = [
     "{{#attachments}}",
-    "    <p><a href=\"{{{url}}}\">{{name}}</a></p>",
+    "    <p><form>",
+    "        <a href=\"{{{url}}}\">{{name}}</a>&nbsp;",
+    "        <input type=\"button\" onClick=\"deleteAttachment( '{{deleteurl}}' );\" name=\"{{name}}\" value=\"löschen\" />",
+    "    </form></p>",
     "{{/attachments}}"].join('\n');
 
 var newestItemsMustache = "<p><a class=\"link\" rel=\"history\" href=\"#docId{{docid}}\">{{title}}, {{author}}</a></p>";

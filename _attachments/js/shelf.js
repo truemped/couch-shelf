@@ -63,7 +63,7 @@ function renderAndBindDocToForm( doc, dbname ) {
         }
     }
 
-    var html = $.mustache( itemDetailsMustache, { divId : type.divSelector, fields : fields, formId : type.formSelector } );
+    var html = $.mustache( itemDetailsMustache, { divId : type.divSelector, fields : fields, formId : type.formSelector, docrev : doc._rev } );
     $("#content").append( html  );
 
     var couchDbDetails = {
@@ -102,14 +102,45 @@ function renderAndBindDocToForm( doc, dbname ) {
         var postForm = app.docForm( "#"+type["formSelector"], couchDbDetails );
     });
 
+    // add all the attachments to the div
     var attachments = [], idx = 0;
     for( var name in doc._attachments ) {
-        attachments[idx] = { name : name, url : "/"+[dbname, doc._id,  name].join('/') };
+        attachments[idx] = { name : name, url : "/"+[dbname, doc._id,  name].join('/'), deleteurl : "/"+[dbname, doc._id, name].join('/')+"?rev="+doc._rev };
         idx++;
     }
+    $( "#existing_attachments" ).append( $.mustache( itemAttachmentsMustache, { attachments : attachments } ) );
 
-    $( "#tab_attachments" ).append( $.mustache( itemAttachmentsMustache, { attachments : attachments } ) );
+    // add the attachment uploading
+    $("form#upload_attachment").submit( function(e) {
+        e.preventDefault();
 
+        var name, value;
+
+        var data = {};
+        $.each($("form#upload_attachment :input").serializeArray(), function(i, field) {
+            data[field.name] = field.value;
+            });
+        $("form#upload_attachment :file").each(function() {
+            data[this.name] = this.value; // file inputs need special handling
+            name = this.name;
+            value = this.value;
+        });
+
+        if (!data._attachments || data._attachments.length == 0) {
+            alert("Please select a file to upload.");
+            return;
+        }
+
+        $(this).ajaxSubmit({
+            url:  "/"+[dbname, doc._id].join('/'),
+            success: function(resp) {
+                alert('Anhang hinzugefügt!');
+                window.location.reload();
+            }
+        });
+    });
+
+    // add all the tabbing behaviour
     //When page loads...
     $(".tab_content").hide(); //Hide all content
     $("ul.tabs li:first").addClass("active").show(); //Activate first tab
@@ -128,6 +159,20 @@ function renderAndBindDocToForm( doc, dbname ) {
 
 
     $( "#"+type["divSelector"] ).show();
+}
+
+// function called when an attachment should be deleted
+function deleteAttachment( url ) {
+    if( confirm("Wirklich löschen?") ) {
+        $.ajax( {
+            type : "DELETE",
+            url : url,
+            success: function() {
+                alert('Wurde gelöscht');
+                window.location.reload();
+            }
+        });
+    }
 }
 
 // function to show the item's details
