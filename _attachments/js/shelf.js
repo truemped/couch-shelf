@@ -35,6 +35,8 @@ function historyPreservingClick( post_url ) {
         } else if( post_url.indexOf( '#tag/' ) > -1 ) {
             var tag = post_url.replace(/^.*#tag\//, '');
             showItemsByTag( tag );
+        } else if( post_url.indexOf( '#search' ) > -1 ) {
+            search();
         }
     }
 
@@ -63,7 +65,7 @@ function renderAndBindDocToForm( doc, dbname ) {
         }
     }
 
-    var html = $.mustache( itemDetailsMustache, { divId : type.divSelector, fields : fields, formId : type.formSelector, docrev : doc._rev } );
+    var html = $.mustache( itemDetailsMustache, { fields : fields, formId : type.formSelector, docrev : doc._rev } );
     $("#content").append( html  );
 
     var couchDbDetails = {
@@ -158,7 +160,7 @@ function renderAndBindDocToForm( doc, dbname ) {
     });
 
 
-    $( "#"+type["divSelector"] ).show();
+    $( "#itemDetails" ).show();
 }
 
 // function called when an attachment should be deleted
@@ -325,6 +327,46 @@ function showItemsByTag( tag ) {
 /*
  * Begin:
  *
- * Methods and variables regarding the tag filtering.
+ * Methods and variables regarding the search.
  *
  */
+function search() {
+    $( "#content" ).empty();
+    $( "#content" ).append( searchIndexMustache );
+
+    var dbname = document.location.href.split('/')[3]
+
+    $( "form#search_form" ).submit( function(e) {
+        e.preventDefault();
+        $( "#search_results" ).empty();
+        var q = "";
+        $.each( $("form#search_form_mock :input").serializeArray(), function( i, field) {
+            if( field.value ) {
+                q += field.name + ":" + field.value + " ";
+            }
+        });
+
+        $( "form#search_form [name=q]" ).val( q );
+
+        $(this).ajaxSubmit( {
+            url : "/" + dbname + "/_fti/couch-shelf/shelf",
+            dataType : "json",
+            success : function( resp ) {
+                var results = [];
+                var idx = 0;
+                resp.rows.map( function( result ) {
+                    results[idx] = { id : result.id, title : result.fields.title, author : result.fields.author };
+                    idx++;
+                });
+                $( "#search_results" ).append( $.mustache( searchResultMustache, { results : results } ) );
+            }
+        });
+    });
+}
+/*
+ * End:
+ *
+ * Methods and variables regarding the search.
+ *
+ */
+
