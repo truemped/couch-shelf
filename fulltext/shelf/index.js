@@ -8,12 +8,12 @@ function(doc) {
     var ret = new Document();
     
     if( doc.title ) {
-        ret.add( doc.title , { field : "title" } );
+        ret.add( doc.title , { field : "title", store : "yes" } );
     }
 
     if( doc.authors ) {
         for( var idx in doc.authors ) {
-            ret.add( doc.authors[idx] , { field : "author" } );
+            ret.add( doc.authors[idx] , { field : "author", store : "yes" } );
         }
     }
 
@@ -75,7 +75,7 @@ function(doc) {
 
     if( doc.tags ) {
         for( var idx in doc.tags ) {
-            ret.add( doc.tags[idx], { field : "tags" } );
+            ret.add( doc.tags[idx].toLowerCase(), { field : "tags", store : "yes" } );
         }
     }
 
