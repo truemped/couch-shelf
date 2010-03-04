@@ -23,7 +23,6 @@ var fieldNames = {
 var types = {
     "article" : {
             "name" : "Artikel",
-            "formSelector" : "articleDetailsForm",
             "fields" : [ "authors",
                 "title",
                 "journal",
@@ -38,7 +37,6 @@ var types = {
         },
     "book" : {
             "name" : "Buch",
-            "formSelector" : "bookDetailsForm",
             "fields" : [
                 "authors",
                 "title",
@@ -58,7 +56,6 @@ var types = {
         },
         "booklet" : {
             "name" : "Booklet",
-            "formSelector" : "bookletDetailsForm",
             "fields" : [
                 "authors",
                 "title",
@@ -73,7 +70,6 @@ var types = {
         },
         "inbook" : {
             "name" : "Buchkapitel",
-            "formSelector" : "inbookDetailsForm",
             "fields" : [
                 "authors",
                 "title",
@@ -95,7 +91,6 @@ var types = {
         },
         "incollection" : {
             "name" : "Beitrag im Sammelband",
-            "formSelector" : "incollectionDetailsForm",
             "fields" : [
                 "authors",
                 "title",

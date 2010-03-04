@@ -65,7 +65,7 @@ function renderAndBindDocToForm( doc, dbname ) {
         }
     }
 
-    var html = $.mustache( itemDetailsMustache, { fields : fields, formId : type.formSelector, docrev : doc._rev } );
+    var html = $.mustache( itemDetailsMustache, { fields : fields, docrev : doc._rev } );
     $("#content").append( html  );
 
     var couchDbDetails = {
@@ -101,7 +101,23 @@ function renderAndBindDocToForm( doc, dbname ) {
     };
 
     $.CouchApp( function(app) {
-        var postForm = app.docForm( "#"+type["formSelector"], couchDbDetails );
+        var postForm = app.docForm( "form#item_details", couchDbDetails );
+    });
+
+    $("#nice_editor").wymeditor({
+    html : doc.notes,
+    toolsItems: [
+        {'name': 'Bold', 'title': 'Strong', 'css': 'wym_tools_strong'}, 
+        {'name': 'Italic', 'title': 'Emphasis', 'css': 'wym_tools_emphasis'},
+        {'name': 'Superscript', 'title': 'Superscript', 'css': 'wym_tools_superscript'},
+        {'name': 'Subscript', 'title': 'Subscript', 'css': 'wym_tools_subscript'},
+        {'name': 'InsertOrderedList', 'title': 'Ordered_List', 'css': 'wym_tools_ordered_list'},
+        {'name': 'InsertUnorderedList', 'title': 'Unordered_List', 'css': 'wym_tools_unordered_list'},
+        {'name': 'Indent', 'title': 'Indent', 'css': 'wym_tools_indent'},
+        {'name': 'Outdent', 'title': 'Outdent', 'css': 'wym_tools_outdent'},
+        {'name': 'Undo', 'title': 'Undo', 'css': 'wym_tools_undo'},
+        {'name': 'Redo', 'title': 'Redo', 'css': 'wym_tools_redo'},
+    ]
     });
 
     // add all the attachments to the div
@@ -342,7 +358,7 @@ function search() {
         var q = "";
         $.each( $("form#search_form_mock :input").serializeArray(), function( i, field) {
             if( field.value ) {
-                q += field.name + ":" + field.value + " ";
+                q += field.name + ":(" + field.value + ") ";
             }
         });
 
