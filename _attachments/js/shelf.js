@@ -357,8 +357,16 @@ function search() {
         $( "#search_results" ).empty();
         var q = "";
         $.each( $("form#search_form_mock :input").serializeArray(), function( i, field) {
+            var value = "";
+            if( field.name == "tags" ) {
+                value = field.value.split(' ').map( function( v ) {
+                    return "+"+v;
+                }).join(' ');
+            } else {
+                value = field.value;
+            }
             if( field.value ) {
-                q += field.name + ":(" + field.value + ") ";
+                q += field.name + ":(" + value + ") ";
             }
         });
 
