@@ -1,6 +1,6 @@
 
 var fieldNames = {
-    "authors" : "Autor",
+    "author" : "Autor",
     "title" : "Titel",
     "publisher" : "Verlag",
     "month" : "Monat",
@@ -15,15 +15,16 @@ var fieldNames = {
     "chapter" : "Kapitel",
     "booktitle" : "Buchtitel",
     "journal" : "Zeitschrift",
-    "notes" : "Notizen",
+    "note" : "Notizen",
     "tags" : "Schlagwörter",
 };
 
+// the field 'tags' is automatically appended!
 
 var types = {
     "article" : {
             "name" : "Artikel",
-            "fields" : [ "authors",
+            "fields" : [ "author",
                 "title",
                 "journal",
                 "month",
@@ -31,14 +32,12 @@ var types = {
                 "volume",
                 "number",
                 "pages",
-                "tags",
-                "notes" ],
-            "template" : { "type" : "article" }
+                "note" ],
         },
     "book" : {
             "name" : "Buch",
             "fields" : [
-                "authors",
+                "author",
                 "title",
                 "publisher",
                 "month",
@@ -49,29 +48,25 @@ var types = {
                 "series",
                 "address",
                 "edition",
-                "tags",
-                "notes",
+                "note",
             ],
-            "template" : { "type" : "book" }
         },
         "booklet" : {
             "name" : "Booklet",
             "fields" : [
-                "authors",
+                "author",
                 "title",
                 "howpublished",
                 "month",
                 "year",
                 "address",
-                "tags",
-                "notes",
+                "note",
             ],
-            "template" : { "type" : "booklet" }
         },
         "inbook" : {
             "name" : "Buchkapitel",
             "fields" : [
-                "authors",
+                "author",
                 "title",
                 "publisher",
                 "editor",
@@ -84,15 +79,13 @@ var types = {
                 "edition",
                 "pages",
                 "address",
-                "tags",
-                "notes",
+                "note",
             ],
-            "template" : { "type" : "inbook" }
         },
         "incollection" : {
             "name" : "Beitrag im Sammelband",
             "fields" : [
-                "authors",
+                "author",
                 "title",
                 "booktitle",
                 "publisher",
@@ -106,9 +99,7 @@ var types = {
                 "edition",
                 "pages",
                 "address",
-                "tags",
-                "notes",
+                "note",
             ],
-            "template" : { "type" : "inbook" }
         }
 }

@@ -58,9 +58,9 @@ function historyPreservingClick( post_url ) {
 function renderAndBindDocToForm( doc, dbname ) {
     var type = types[ doc.type ];
 
-    var fields = [];
+    var fields = [ "tags" ];
     for( var idx in type.fields ) {
-        if( type.fields[idx].indexOf( "notes" ) == -1 ) {
+        if( type.fields[idx].indexOf( "note" ) == -1 ) {
             fields[ idx ] = { id : type.fields[idx], name : fieldNames[ type.fields[idx] ] };
         }
     }
@@ -71,7 +71,7 @@ function renderAndBindDocToForm( doc, dbname ) {
     var couchDbDetails = {
         id : doc._id,
         fields : type["fields"],
-        template : type["template"],
+        template : { type : type },
         onLoad : function(doc) {
             if( doc.tags ) {
                 doc.tags = doc.tags.join(" ");
