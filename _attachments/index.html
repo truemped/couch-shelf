@@ -1,14 +1,73 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Generated CouchApp</title>
-    <link rel="stylesheet" href="style/main.css" type="text/css">
-  </head>
-  <body>
-    <h1>Generated CouchApp</h1>
-    <p>This is a placeholder page</p>
-  </body>
-  <script src="/_utils/script/json2.js"></script>
-  <script src="/_utils/script/jquery.js?1.3.1"></script>
-  <script src="/_utils/script/jquery.couch.js?0.9.0"></script>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+    <title>couch-shelf</title>
+
+    <link rel="stylesheet" href="style/shelf.css" type="text/css" media="screen, projection" />
+
+    <!-- Framework CSS -->
+    <link rel="stylesheet" href="style/screen.css" type="text/css" media="screen, projection" />
+    <link rel="stylesheet" href="style/print.css" type="text/css" media="print" />
+    <!--[if IE]><link rel="stylesheet" href="style/ie.css" type="text/css" media="screen, projection"><![endif]-->
+
+    <!-- CSS Menu -->
+    <link href="style/dropdown/themes/default/helper.css" media="screen" rel="stylesheet" type="text/css" />
+    <link href="style/dropdown/dropdown.vertical.css" media="screen" rel="stylesheet" type="text/css" />
+    <link href="style/dropdown/themes/default/default.ultimate.css" media="screen" rel="stylesheet" type="text/css" />
+
+    <script src="/_utils/script/json2.js"></script>
+    <script src="/_utils/script/jquery.js?1.3.1"></script>
+    <script src="/_utils/script/jquery.couch.js?0.9.0"></script>
+    <script src="/_utils/script/jquery.form.js?0.9.0"></script>
+    <script src="vendor/couchapp/jquery.couchapp.js"></script>
+    <script src="js/jquery.mustache-0.2.1.js"></script>
+    <script src="js/jquery.history.js"></script>
+    <script src="js/shelf.js"></script>
+    <script src="js/shelf.types.js"></script>
+    <script src="js/shelf.mustache.js"></script>
+
+    <script src="js/wymeditor/jquery.wymeditor.pack.js"></script>
+
+<script>
+$(document).ready( function() {
+    initHistory();
+    initDocTypes();
+});
+</script>
+</head>
+
+<body>
+
+<div class="container">
+
+<hr class="space">&nbsp;</span>
+
+<div class="span-24 last">
+    <h1>Bookshelf</h1>
+    <hr class="space">&nbsp;</span>
+</div>
+
+<div class="span-6">
+<ul id="navigation" class="dropdown dropdown-vertical">
+    <li><a href="#newest" rel="history">Neueste Eintr&auml;ge</a></li>
+    <li class="dir">
+        <img src="img/document-new.png" />&nbsp;Neuer Eintrag
+        <ul id="newDocTypeList"> </ul>
+    </li>
+    <li><a href="#search" rel="history"><img src="img/system-search.png" />&nbsp;Suchen</a></li>
+    <li><a href="#tagcloud" rel="history"><img src="img/weather-overcast.png" />&nbsp;Schlagw&ouml;rter</a></li>
+</ul>
+</div>
+
+<div class="span-18 last">
+<div id="content">
+
+</div>
+
+</div>
+
+</body>
+
 </html>
