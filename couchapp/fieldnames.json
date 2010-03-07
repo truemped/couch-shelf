@@ -1,4 +1,5 @@
 {
+    "cite-key" : "Zitierschlüssel",
     "author" : "Autor",
     "title" : "Titel",
     "publisher" : "Verlag",
@@ -15,5 +16,5 @@
     "booktitle" : "Buchtitel",
     "journal" : "Zeitschrift",
     "note" : "Notizen",
-    "tags" : "Schlagwoerter"
+    "tags" : "Schlagwörter"
 }
