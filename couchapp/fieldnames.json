@@ -1,0 +1,19 @@
+{
+    "author" : "Autor",
+    "title" : "Titel",
+    "publisher" : "Verlag",
+    "month" : "Monat",
+    "year" : "Jahr",
+    "editor" : "Herausgeber",
+    "volume" : "Band",
+    "number" : "Ausgabe",
+    "series" : "Serie",
+    "address" : "Adresse",
+    "edition" : "Edition",
+    "pages" : "Seiten",
+    "chapter" : "Kapitel",
+    "booktitle" : "Buchtitel",
+    "journal" : "Zeitschrift",
+    "note" : "Notizen",
+    "tags" : "Schlagwoerter"
+}
