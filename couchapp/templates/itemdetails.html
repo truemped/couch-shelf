@@ -94,7 +94,7 @@
                     doc.created_at = new Date();
                 }
                 if(!doc._id) {
-                    doc._id = doc['cite-key'];
+                    doc._id = doc.citekey;
                 }
                 {{/newdoc}}
                 if(doc.tags) {
@@ -105,12 +105,17 @@
                     }
                 }
                 if(doc.author) {
-                    doc.author = doc.authors.split(";");
+                    doc.author = doc.author.split(";");
                     for(var idx in doc.author) {
-                        doc.authors[idx] = $.trim(doc.authors[idx]);
+                        doc.author[idx] = $.trim(doc.author[idx]);
                     }
                 }
+            },
+            {{#newdoc}}
+            success : function( resp, localDoc ) {
+                showItemDetails( localDoc._id );
             }
+            {{/newdoc}}
         });
 
         // add the attachment uploading

@@ -6,7 +6,7 @@ function(doc, req) {
 
     var prepareFields = function( doc, commonFields ) {
         doc.allfields = commonFields;
-        doc.allfields.splice( 0,0,"cite-key" );
+        doc.allfields.splice( 0,0,"citekey" );
         doc.allfields.push("tags");
         doc.fields = [];
         for( var idx in doc.allfields ) {
@@ -50,6 +50,7 @@ function(doc, req) {
                 var doc = { newdoc : true };
                 var type = types[ req.id ];
                 doc = prepareFields( doc, type.fields );
+                doc.type = req.id;
 
                 return {
                     body : Mustache.to_html( templates.itemdetails, doc ),
