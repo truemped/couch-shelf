@@ -1,6 +1,6 @@
 
 var tagListResultMustache = [ "{{#docs}}",
-    "<p><a href=\"#docId{{{id}}}\" rel=\"history\">{{title}}, {{authors}}</a></p>",
+    "<p><a href=\"#/doc/{{{id}}}\" rel=\"history\">{{title}}, {{authors}}</a></p>",
     "{{/docs}}"].join('\n');
 
 var tagListPagingLinksMustache = [ "<p>",
