@@ -75,7 +75,7 @@ function showNewestItems() {
     $("#content").empty();
 
     $.CouchApp( function( app ) {
-        appendAjaxResp( app.listPath("newest-items", "itemsByDate") + "?descending=true", "#content" );
+        appendAjaxResp( app.listPath("newest-items", "itemsByDate") + "?descending=true&limit=20", "#content" );
     });
 }
 
