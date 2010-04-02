@@ -31,17 +31,26 @@ var searchIndexMustache = [ "<p>",
     "<tr><td>",
     "<form id=\"search_form\">",
     "<input type=\"hidden\" name=\"q\" value=\"\"/>",
+    "<input type=\"hidden\" name=\"limit\" value=\"10\"/>",
+    "<input type=\"hidden\" name=\"skip\" value=\"0\"/>",
     "<input type=\"submit\" value=\"finden\"/>",
     "</form>",
     "</td></tr>",
     "</table>",
     "<hr/>",
     "<div id=\"search_results\"></div>",
+    "<div id=\"search_paging\"></div>",
     "</div>",
-    "<form id=",
     "</p>"].join('\n');
 
 var searchResultMustache = [ "{{#results}}",
     "<p><a href=\"#/doc/{{id}}\" rel=\"history\">{{title}}, {{author}}</a></p>",
     "{{/results}}"].join('\n');
+
+var searchPagingMustache = [ "{{#previous}}",
+    "<a href=\"{{{previous}}}\" rel=\"history\"><img src=\"img/go-previous.png\" /></a>&nbsp;&nbsp;&nbsp;",
+    "{{/previous}}",
+    "{{#next}}",
+    "<a href=\"{{{next}}}\" rel=\"history\"><img src=\"img/go-next.png\" /></a>",
+    "{{/next}}"].join('\n');
 
