@@ -2,9 +2,9 @@
 couch-shelf
 ===
 
-This is my first real [couchapp][]. Basically this allows you to manage you
-literature within [CouchDB][]. Currently this is very much alpha but I hope to
-finish quite some bits and peaces during the weekend.
+This is my first real [couchapp][]. Basically this allows you to manage your
+literature within [CouchDB][]. Currently this is very much beta but most of the
+features work.
 
 [couchapp]: http://github.com/couchapp/couchapp
 [CouchDB]: http://couchdb.apache.org
@@ -23,6 +23,7 @@ Features
 Planned Features
 ===
 
+- Customizable literature quotations
 - Integration with [OpenOffice.org][OOo]
 - central server hosted somewhere in order to allow for collaboration with other
   people
