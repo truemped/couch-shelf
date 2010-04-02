@@ -3,6 +3,10 @@ a.link {
     cursor: pointer;
 }
 
+h1 a {
+    text-decoration: none;
+}
+
 ul.tabs {
     margin: 0;
     padding: 0;
