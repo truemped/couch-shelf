@@ -21,6 +21,9 @@
 </table>
 
 <input type="submit" value="Speichern" />
+{{#regular}}
+<input type="button" onclick="deleteDocument('{{_id}}', '{{_rev}}');" value="Löschen" />
+{{/regular}}
 </div>
 
 {{#regular}}
@@ -28,9 +31,11 @@
     <textarea name="note" id="nice_editor" cols="80" rows="30"></textarea><br/>
     <input type="submit" value="Speichern" class="wymupdate" />
 </div>
+{{/regular}}
 
 </form>
 
+{{#regular}}
 <div id="tab_attachments" class="tab_content" >
 
     {{#has_attachments}}

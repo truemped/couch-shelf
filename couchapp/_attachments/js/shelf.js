@@ -86,6 +86,16 @@ function showItemDetails( docid ) {
 
 }
 
+// function to delete a document
+function deleteDocument( id, rev ) {
+    $.CouchApp( function( app ) {
+        if( confirm( "Eintrag wirklich löschen?" ) ) {
+            app.db.removeDoc( { _id : id, _rev : rev } );
+        }
+    });
+    showNewestItems();
+}
+
 // function called when an attachment should be deleted
 function deleteAttachment( url ) {
     if( confirm("Wirklich löschen?") ) {
