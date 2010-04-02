@@ -34,6 +34,10 @@ Planned Features
 Thanks
 ===
 
+- The [CouchDB Team][couchdbteam]
+
+- Robert Newson for [couchdb-lucene][]
+
 - Soh Tanaka for his JQuery/CSS [tabtutorial][tabtut]
 
 - The [Blueprint CSS][blueprint] Project
@@ -42,6 +46,7 @@ Thanks
 
 - [WYMeditor: web-based XHTML editor][wym]
 
+[couchdbteam]: http://couchdb.apache.org
 [tabtut]: http://www.sohtanaka.com/web-design/simple-tabs-w-css-jquery/
 [blueprint]: http://github.com/joshuaclayton/blueprint-css
 [dropdown]: http://www.lwis.net/free-css-drop-down-menu/
