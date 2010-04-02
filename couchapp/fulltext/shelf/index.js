@@ -11,9 +11,9 @@ function(doc) {
         ret.add( doc.title , { field : "title", store : "yes" } );
     }
 
-    if( doc.authors ) {
-        for( var idx in doc.authors ) {
-            ret.add( doc.authors[idx] , { field : "author", store : "yes" } );
+    if( doc.author ) {
+        for( var idx in doc.author ) {
+            ret.add( doc.author[idx] , { field : "author", store : "yes" } );
         }
     }
 
